@@ -38,14 +38,20 @@
                         </div>
                     </div>
                     <div class="dashboard__instructor-info-right">
-                        <a href="{{ route('student.dashboard') }}" class="btn btn-two arrow-btn">{{ __('Student Dashboard') }} <img
-                            src="{{ asset('frontend/img/icons/right_arrow.svg') }}" alt="img" class="injectable"></a>
+                        @if (auth()->user()->role === 'instructor' && auth()->user()->super_instructors !== \App\Enums\SuperInstructor::YES)
+                            <a href="{{ route('student.dashboard') }}" class="btn btn-two arrow-btn">
+                                {{ __('Student Dashboard') }} 
+                                <img src="{{ asset('frontend/img/icons/right_arrow.svg') }}" alt="img" class="injectable">
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    @include('frontend.instructor-dashboard.layouts.sidebar')
+                    @if (auth()->user()->instructor_request && auth()->user()->instructor_request->status === 'approved')
+                        @include('frontend.instructor-dashboard.layouts.sidebar')
+                    @endif
                 </div>
                 <div class="col-lg-9 position-relative">
                     <div class="preloader d-none">

@@ -10,8 +10,6 @@ use UniSharp\LaravelFilemanager\Events\FileWasUploaded;
 use UniSharp\LaravelFilemanager\Events\ImageIsUploading;
 use UniSharp\LaravelFilemanager\Events\ImageWasUploaded;
 use UniSharp\LaravelFilemanager\LfmUploadValidator;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 
 class LfmPath
 {
@@ -324,11 +322,9 @@ class LfmPath
         $this->setName($file_name)->thumb(true);
         $thumbWidth = $this->helper->shouldCreateCategoryThumb() && $this->helper->categoryThumbWidth() ? $this->helper->categoryThumbWidth() : config('lfm.thumb_img_width', 200);
         $thumbHeight = $this->helper->shouldCreateCategoryThumb() && $this->helper->categoryThumbHeight() ? $this->helper->categoryThumbHeight() : config('lfm.thumb_img_height', 200);
+        $image = Image::make($original_image->get())
+            ->fit($thumbWidth, $thumbHeight);
 
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read($original_image->get());
-        $image->cover($thumbWidth, $thumbHeight);
-
-        $this->storage->put($image->encode(), 'public');
+        $this->storage->put($image->stream()->detach(), 'public');
     }
 }

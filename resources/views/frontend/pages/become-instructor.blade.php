@@ -26,17 +26,24 @@
                         <form method="POST" action="{{ route('become-instructor.create') }}" class="account__form" enctype="multipart/form-data">
                             @csrf
 
-                            @if ($instructorRequestSetting?->need_certificate == 1)
+                            @if ($instructorRequestSetting?->need_identity_scan == 1)
                             <div class="from-group mb-3">
-                                <label for="">{{ __('Certificate and documents') }} <code>*</code"></label>
-                                <input type="file" class="form-control" name="certificate">
+                                <label for="identity_scan">{{ __('Identity Scan') }} <code>*</code></label>
+                                <input type="file" class="form-control" name="identity_scan" accept=".pdf,.png,.jpg,.jpeg">
+                                <small class="form-text text-muted">
+                                    {{ __('Please upload a document in PDF, PNG, or JPG format, with a size below 1 MB.') }}
+                                </small>
                             </div>
                             @endif
 
-                            @if ($instructorRequestSetting?->need_identity_scan == 1)
-                            <div class="from-group mb-3">
-                                <label for="">{{ __('Certificate and documents') }} <code>*</code"></label>
-                                <input type="file" class="form-control" name="identity_scan">
+                            @if ($instructorRequestSetting?->need_certificate == 1)
+                            <div class="form-group mb-3" id="certificate-group">
+                                <label for="certificate">{{ __('Certificate and documents') }} <code>*</code></label>
+                                <input type="file" class="form-control" name="certificate[]" id="certificate" accept=".pdf,.png,.jpg,.jpeg">
+                                <small class="form-text text-muted">
+                                    {{ __('Please upload a document in PDF, PNG, or JPG format, with a size below 1 MB.') }}
+                                </small>
+                                <button type="button" class="btn btn-sm btn-primary mt-2" id="add-certificate">{{ __('Add More') }}</button>
                             </div>
                             @endif
 
@@ -87,3 +94,26 @@
     </section>
     <!-- singUp-area-end -->
 @endsection
+@push('scripts')
+<script>
+    document.getElementById('add-certificate').addEventListener('click', function () {
+        const certificateGroup = document.getElementById('certificate-group');
+        const newInput = document.createElement('div');
+        newInput.classList.add('form-group', 'mt-2');
+
+        newInput.innerHTML = `
+            <label for="certificate">{{ __('Certificate and documents') }} <code>*</code></label>
+            <input type="file" class="form-control mb-2" name="certificate[]" accept=".pdf,.png,.jpg,.jpeg">
+            <small class="form-text text-muted">
+                {{ __('Please upload a document in PDF, PNG, or JPG format, with a size below 1 MB.') }}
+            </small>
+            <button type="button" class="btn btn-sm btn-danger remove-certificate">{{ __('Remove') }}</button>
+        `;
+
+        certificateGroup.appendChild(newInput);
+        newInput.querySelector('.remove-certificate').addEventListener('click', function () {
+            this.parentElement.remove();
+        });
+    });
+</script>
+@endpush

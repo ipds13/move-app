@@ -9,6 +9,7 @@ use Illuminate\View\View;
 use Modules\Order\app\Models\Order;
 use Modules\Order\app\Models\OrderItem;
 use Modules\PaymentWithdraw\app\Models\WithdrawRequest;
+use Modules\InstructorRequest\app\Models\InstructorRequest;
 
 class InstructorDashboardController extends Controller
 {
@@ -22,12 +23,15 @@ class InstructorDashboardController extends Controller
             $q->where('status', 'pending');
         })->count();
         $totalWithdraw = WithdrawRequest::where(['user_id' => auth('web')->user()->id, 'status' => 'approved'])->sum('withdraw_amount');
+        $instructorRequest = InstructorRequest::where('user_id', userAuth()->id)->first();
+        $isRequestPending = $instructorRequest && $instructorRequest->status !== 'approved';
         return view('frontend.instructor-dashboard.index', compact(
             'totalCourses',
             'totalOrders',
             'totalPendingCourses',
             'totalPendingOrders',
-            'totalWithdraw'
+            'totalWithdraw',
+            'isRequestPending'
         ));
     }
 

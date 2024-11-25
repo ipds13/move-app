@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserStatus;
+use App\Enums\SuperInstructor;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,13 @@ class ApprovedInstructorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!instructorStatus() || instructorStatus() && instructorStatus() != UserStatus::APPROVED->value) {
+        $superInstructor = auth('web')->user()?->super_instructors;
+
+        if ($superInstructor && $superInstructor->value == SuperInstructor::YES->value) {
+            return $next($request);
+        }
+        
+        if (!instructorStatus() || instructorStatus() != UserStatus::APPROVED->value) {
             return redirect()->route('become-instructor');
         }
 

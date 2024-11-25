@@ -30,6 +30,7 @@ class InstructorRequestController extends Controller
             });
         });
         $query->when($request->status, fn ($q) => $q->where('status', $request->status));
+        $query->whereNotNull('certificate')->whereNotNull('identity_scan');
         $orderBy = $request->order_by == 1 ? 'asc' : 'desc';
         $instructorRequests = $request->get('par-page') == 'all' ?
             $query->orderBy('id', $orderBy)->get() :
@@ -46,6 +47,8 @@ class InstructorRequestController extends Controller
         checkAdminHasPermissionAndThrowException('instructor.request.list');
 
         $instructorRequest = InstructorRequest::find($id);
+        $certificates = InstructorRequest::where('user_id', $instructorRequest->user_id)->whereNotNull('certificate')->pluck('certificate')->toArray();
+        $instructorRequest->certificates = $certificates;
         $user = User::where('id', $instructorRequest->user_id)->first();
         return view('instructorrequest::instructor-request.edit', compact('user', 'instructorRequest'));
     }
@@ -58,8 +61,11 @@ class InstructorRequestController extends Controller
         checkAdminHasPermissionAndThrowException('instructor.request.list');
 
         $instructorRequest = InstructorRequest::find($id);
-        $instructorRequest->status = $request->status;
-        $instructorRequest->save();
+        $relatedRequests = InstructorRequest::where('user_id', $instructorRequest->user_id)->get();
+        foreach ($relatedRequests as $requestItem) {
+            $requestItem->status = $request->status;
+            $requestItem->save();
+        }
 
         $user = User::where('id', $instructorRequest->user_id)->first();
         $user->role = 'instructor';

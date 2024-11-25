@@ -186,25 +186,23 @@
                                                 <li><a href="{{ route('login') }}">{{ __('Sign in') }}</a></li>
                                                 <li><a href="{{ route('register') }}">{{ __('Sign Up') }}</a></li>
                                             @else
-                                                @if (Auth::guard('web')->user())
-                                                    @if (instructorStatus() == 'approved')
-                                                        <li><a
-                                                                href="{{ route('instructor.dashboard') }}">{{ __('Instructor Dashboard') }}</a>
-                                                        </li>
-                                                    @endif
-                                                    <li><a
-                                                            href="{{ route('student.dashboard') }}">{{ __('Student Dashboard') }}</a>
-                                                    </li>
-                                                    <li><a
-                                                            href="{{ userAuth()->role == 'instructor' ? route('instructor.setting.index') : route('student.setting.index') }}">{{ __('Profile') }}</a>
-                                                    </li>
-                                                    <li><a
-                                                            href="{{ userAuth()->role == 'instructor' ? route('instructor.courses.index') : route('student.enrolled-courses') }}">{{ __('Courses') }}</a>
-                                                    </li>
-                                                    <li><a href=""
-                                                            class="text-danger logout-btn">{{ __('Logout') }}</a>
-                                                    </li>
+                                            @if (Auth::guard('web')->user())
+                                                @if (instructorStatus() == 'approved' && userAuth()->role == 'instructor' && auth()->user()->super_instructors == \App\Enums\SuperInstructor::YES)
+                                                    <li><a href="{{ route('instructor.dashboard') }}">{{ __('Instructor Dashboard') }}</a></li>
+                                                    <li><a href="{{ route('instructor.courses.index') }}">{{ __('Instructor Courses') }}</a></li>
+                                                @elseif (auth()->user()->super_instructors !== \App\Enums\SuperInstructor::YES && userAuth()->role != 'student')
+                                                    <li><a href="{{ route('instructor.dashboard') }}">{{ __('Instructor Dashboard') }}</a></li>
+                                                    <li><a href="{{ route('student.dashboard') }}">{{ __('Student Dashboard') }}</a></li>
+                                                    <li><a href="{{ route('student.enrolled-courses') }}">{{__('Student Courses') }}</a></li>
+                                                    <li><a href="{{ route('instructor.courses.index') }}">{{__('Instructor Courses')}}</a></li>
+                                                @elseif (auth()->user()->super_instructors !== \App\Enums\SuperInstructor::YES && userAuth()->role == 'student')
+                                                    <li><a href="{{ route('student.dashboard') }}">{{ __('Student Dashboard') }}</a></li>
+                                                    <li><a href="{{ route('student.enrolled-courses') }}">{{__('Student Courses') }}</a></li>
                                                 @endif
+
+                                                <li><a href="{{ userAuth()->role == 'instructor' ? route('instructor.setting.index') : route('student.setting.index') }}">{{ __('Profile') }}</a></li>
+                                                <li><a href="" class="text-danger logout-btn">{{ __('Logout') }}</a></li>
+                                            @endif
                                             @endguest
                                         </ul>
                                     </li>

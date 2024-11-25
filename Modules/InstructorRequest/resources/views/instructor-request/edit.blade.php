@@ -63,14 +63,6 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        @if ($instructorRequest->certificate)
-                                            <tr>
-                                                <td><b>{{ __('Certificate / Document') }}</b></td>
-                                                <td><a target="_blank" href="{{ asset($instructorRequest->certificate) }}"
-                                                        class="btn btn-primary">{{ __('Download') }}</a></td>
-                                            </tr>
-                                        @endif
-
                                         @if ($instructorRequest->identity_scan)
                                             <tr>
                                                 <td><b>{{ __('Identity Scan') }}</b></td>
@@ -80,6 +72,18 @@
                                             </tr>
                                         @endif
 
+                                        @if (!empty($instructorRequest->certificates) && count($instructorRequest->certificates) > 0)
+                                            @foreach ($instructorRequest->certificates as $certificate)
+                                                <tr>
+                                                    <td><b>{{ __('Certificate / Document') }}</b></td>
+                                                    <td>
+                                                        <a target="_blank" href="{{ asset($certificate) }}" class="btn btn-primary">
+                                                            {{ __('Download') }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         <tr>
                                             <td><b>{{ __('Extra Informations') }}</b></td>
                                             <td>{{ $instructorRequest->extra_information }}</td>

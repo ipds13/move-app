@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69
+class ComposerStaticInitf11b9fceb455c73db91d077cfd105fc8
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -480,8 +480,8 @@ class ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -802,6 +802,7 @@ class ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69
         'App\\Enums\\RedirectMessage' => __DIR__ . '/../..' . '/app/Enums/RedirectMessage.php',
         'App\\Enums\\RedirectType' => __DIR__ . '/../..' . '/app/Enums/RedirectType.php',
         'App\\Enums\\SocialiteDriverType' => __DIR__ . '/../..' . '/app/Enums/SocialiteDriverType.php',
+        'App\\Enums\\SuperInstructor' => __DIR__ . '/../..' . '/app/Enums/SuperInstructor.php',
         'App\\Enums\\UserStatus' => __DIR__ . '/../..' . '/app/Enums/UserStatus.php',
         'App\\Exceptions\\AccessPermissionDeniedException' => __DIR__ . '/../..' . '/app/Exceptions/AccessPermissionDeniedException.php',
         'App\\Exceptions\\DemoModeEnabledException' => __DIR__ . '/../..' . '/app/Exceptions/DemoModeEnabledException.php',
@@ -5606,6 +5607,7 @@ class ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69
         'Laravel\\Socialite\\Two\\Token' => __DIR__ . '/..' . '/laravel/socialite/src/Two/Token.php',
         'Laravel\\Socialite\\Two\\TwitterProvider' => __DIR__ . '/..' . '/laravel/socialite/src/Two/TwitterProvider.php',
         'Laravel\\Socialite\\Two\\User' => __DIR__ . '/..' . '/laravel/socialite/src/Two/User.php',
+        'Laravel\\Socialite\\Two\\XProvider' => __DIR__ . '/..' . '/laravel/socialite/src/Two/XProvider.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',
@@ -10939,10 +10941,10 @@ class ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6611f65c1de81cdbc1d2be168f156d69::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf11b9fceb455c73db91d077cfd105fc8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf11b9fceb455c73db91d077cfd105fc8::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf11b9fceb455c73db91d077cfd105fc8::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf11b9fceb455c73db91d077cfd105fc8::$classMap;
 
         }, null, ClassLoader::class);
     }

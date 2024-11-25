@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\InstructorRequest\app\Models\InstructorRequest;
+use App\Enums\SuperInstructor;
 
 class User extends Authenticatable {
     use HasApiTokens, HasFactory, Notifiable;
@@ -36,6 +37,7 @@ class User extends Authenticatable {
         'is_banned',
         'verification_token',
         'forget_password_token',
+        'super_instructors'
     ];
 
     /**
@@ -56,6 +58,7 @@ class User extends Authenticatable {
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password'          => 'hashed',
+        'super_instructors' => SuperInstructor::class,
     ];
 
     public function messagesSent() {
@@ -150,6 +153,10 @@ class User extends Authenticatable {
         return $this->hasOne(JitsiSetting::class, 'instructor_id', 'id');
     }
 
+    public function instructor_request()
+    {
+        return $this->hasOne(InstructorRequest::class, 'user_id');
+    }
     /**
      * Boot the model.
      */

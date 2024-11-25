@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'laravel/laravel',
-        'pretty_version' => '1.4.0.x-dev',
-        'version' => '1.4.0.9999999-dev',
-        'reference' => 'fa9abfa14c37bee3a6f87266611c1976d0c3d84c',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '3faac8956b22e61f90d109959f20cbb389a58558',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -542,9 +542,9 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.4.0.x-dev',
-            'version' => '1.4.0.9999999-dev',
-            'reference' => 'fa9abfa14c37bee3a6f87266611c1976d0c3d84c',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '3faac8956b22e61f90d109959f20cbb389a58558',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -596,9 +596,9 @@
             'dev_requirement' => false,
         ),
         'laravel/socialite' => array(
-            'pretty_version' => 'v5.14.0',
-            'version' => '5.14.0.0',
-            'reference' => 'c7b0193a3753a29aff8ce80aa2f511917e6ed68a',
+            'pretty_version' => 'v5.16.0',
+            'version' => '5.16.0.0',
+            'reference' => '40a2dc98c53d9dc6d55eadb0d490d3d72b73f1bf',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laravel/socialite',
             'aliases' => array(),
@@ -1054,8 +1054,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0|3.0',
+                0 => '1.0|2.0|3.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

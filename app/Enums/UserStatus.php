@@ -11,4 +11,5 @@ enum UserStatus: string
     case REJECTED = 'rejected';
     case PENDING = 'pending';
     case APPROVED = 'approved';
+    case VERIFIED_EMAIL = 'verified email';
 }

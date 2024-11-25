@@ -19,9 +19,9 @@ class SocialiteController extends Controller {
         if ($driver == SocialiteDriverType::FACEBOOK->value) {
             self::setFacebookLoginInfo();
         } elseif ($driver == SocialiteDriverType::GOOGLE->value) {
-            self::setGoogleLoginInfo();
+            config(['services.google.redirect' => route('auth.social.callback', ['driver' => 'google'])]);
         }
-    }
+    }    
 
     public function redirectToDriver($driver) {
         if (in_array($driver, SocialiteDriverType::getAll())) {

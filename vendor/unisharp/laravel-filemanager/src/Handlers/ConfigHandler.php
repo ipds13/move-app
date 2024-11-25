@@ -6,6 +6,6 @@ class ConfigHandler
 {
     public function userField()
     {
-         return auth()->id();
+        return auth()->id();
     }
 }

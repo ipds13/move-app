@@ -98,7 +98,9 @@
                                                     <td>{{ $request->user->email }}</td>
 
                                                     <td>
-                                                        @if ($request->status == 'pending')
+                                                        @if ($request->user->email_verified_at == null)
+                                                            <span class="badge badge-info">{{ __('Verified Email') }}</span>
+                                                        @elseif ($request->status == 'pending')
                                                             <span class="badge badge-warning">{{ __('Pending') }}</span>
                                                         @elseif ($request->status == 'approved')
                                                             <span class="badge badge-success">{{ __('Approved') }}</span>
@@ -107,14 +109,14 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('admin.instructor-request.edit', $request->id) }}"
-                                                            class="btn btn-primary btn-sm"><i class="fa fa-eye"
-                                                                aria-hidden="true"></i></a>
-                                                        @if ($request->status != 'approved')
-                                                        <a href="javascript:;" data-toggle="modal"
-                                                            data-target="#deleteModal" class="btn btn-danger btn-sm"
-                                                            onclick="deleteData({{ $request->id }})"><i
-                                                                class="fa fa-trash" aria-hidden="true"></i></a>
+                                                        @if ($request->user->email_verified_at != null)
+                                                            <a href="{{ route('admin.instructor-request.edit', $request->id) }}"
+                                                                class="btn btn-primary btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                            @if ($request->status != 'approved')
+                                                                <a href="javascript:;" data-toggle="modal" data-target="#deleteModal"
+                                                                    class="btn btn-danger btn-sm" onclick="deleteData({{ $request->id }})"><i
+                                                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 </tr>

@@ -25,30 +25,46 @@ class BecomeInstructorController extends Controller
 
     function store(BecomeInstructorStoreRequest $request): RedirectResponse
     {
-        $instructorRequest = InstructorRequest::updateOrCreate(
-            ['user_id' => auth('web')->user()->id],
-            [
+        if ($request->has('certificate') && count($request->file('certificate')) > 0) {
+            foreach ($request->file('certificate') as $index => $certificateFile) {
+                $filePath = file_upload($certificateFile);
+                $identityFilePath = null;
+                
+                if ($index === 0 && $request->has('identity_scan')) {
+                    $identityFilePath = file_upload($request->identity_scan);
+                }
+
+                $instructorRequest = InstructorRequest::create([
+                    'user_id' => auth('web')->user()->id,
+                    'status' => 'pending', 
+                    'payout_account' => $request->payout_account,
+                    'payout_information' => $request->payout_information,
+                    'extra_information' => $request->extra_information,
+                    'certificate' => $filePath,
+                    'identity_scan' => $identityFilePath,
+                ]);
+    
+                $instructorRequest->save();
+            }
+        } else {
+            $instructorRequest = InstructorRequest::create([
+                'user_id' => auth('web')->user()->id,
                 'status' => 'pending',
                 'payout_account' => $request->payout_account,
                 'payout_information' => $request->payout_information,
                 'extra_information' => $request->extra_information,
-            ]
-        );
-
-        if($request->has('certificate')) {
-            $filePath = file_upload($request->certificate);
-            $instructorRequest->certificate = $filePath;
-            $instructorRequest->save();
-        }
-
-        if($request->has('identity_scan')) {
-            $filePath = file_upload($request->identity_scan);
-            $instructorRequest->identity_scan = $filePath;
-            $instructorRequest->save();
+                'certificate' => null,
+            ]);
+    
+            if ($request->has('identity_scan')) {
+                $filePath = file_upload($request->identity_scan);
+                $instructorRequest->identity_scan = $filePath;
+                $instructorRequest->save();
+            }
         }
 
         return redirect()->route('student.dashboard')->with([
-            'success' => __('Instructor request submitted successfully we will let you know when your account is approved'),
+            'success' => __('Instructor request submitted successfully. We will let you know when your account is approved'),
             'alert-type' => 'success'
         ]);
     }
